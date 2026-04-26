@@ -1,4 +1,9 @@
 # AI Disaster Response System
+<p align="center">
+  <a href="https://disastermanagementsystem.streamlit.app/">
+    <img src="https://img.shields.io/badge/Launch_App-blue?style=for-the-badge" />
+  </a>
+</p>
 
 This project simulates a modular disaster response pipeline in Python using:
 
