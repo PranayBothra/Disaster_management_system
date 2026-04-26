@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Handover: AI Disaster Response System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+        }
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        pre {
+            background-color: #020617 !important;
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+        }
+        code {
+            color: #38bdf8;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .toc-link {
+            transition: all 0.2s ease;
+        }
+        .toc-link:hover {
+            color: #38bdf8;
+            padding-left: 0.5rem;
+        }
+        .data-key {
+            color: #f472b6; /* pink-400 */
+            font-weight: 600;
+        }
+        .data-type {
+            color: #fbbf24; /* amber-400 */
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-blue-500/30">
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-72 fixed inset-y-0 left-0 z-50 overflow-y-auto glass-panel p-6 border-r border-slate-700 hidden lg:block">
+            <div class="mb-8">
+                <div class="text-xs font-bold uppercase tracking-widest text-blue-400 mb-2">Internal Documentation</div>
+                <h2 class="text-2xl font-bold text-white">Backend Handover Manual</h2>
+                <p class="text-sm text-slate-400 mt-2">AI Disaster Response System</p>
+            </div>
+            
+            <nav class="space-y-1 text-sm font-medium">
+                <a href="#executive-summary" class="toc-link block py-2 text-slate-300">1. Executive Summary</a>
+                <a href="#backend-architecture" class="toc-link block py-2 text-slate-300">2. Backend Architecture</a>
+                <a href="#pipeline-workflow" class="toc-link block py-2 text-slate-300">3. Detailed Pipeline Workflow</a>
+                <a href="#data-structures" class="toc-link block py-2 text-slate-300">4. Core Data Structures</a>
+                <a href="#module-responsibilities" class="toc-link block py-2 text-slate-300">5. Backend Module Responsibilities</a>
+                <a href="#setup-deployment" class="toc-link block py-2 text-slate-300">6. Setup & Deployment</a>
+                <a href="#troubleshooting" class="toc-link block py-2 text-slate-300">7. Known Logs & Behavior</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 lg:ml-72 p-6 lg:p-12 max-w-5xl">
+            
+            <header class="mb-12 border-b border-slate-700 pb-8">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">AI Disaster Response System</h1>
+                <p class="text-xl text-slate-400 leading-relaxed">
+                    Technical Handover Document detailing the backend architecture, data flow, and pipeline execution workflow.
+                </p>
+            </header>
+
+            <!-- 1. Executive Summary -->
+            <section id="executive-summary" class="mb-16 scroll-mt-10">
+                <h2 class="text-3xl font-bold mb-6 text-white flex items-center">
+                    <span class="bg-blue-500/20 text-blue-400 p-2 rounded-lg mr-3 text-lg">01</span> Executive Summary
+                </h2>
+                <div class="glass-panel p-6 rounded-2xl text-slate-300 leading-relaxed space-y-4">
+                    <p>
+                        The AI Disaster Response System is a sequential algorithmic pipeline built in Python. The backend is designed to simulate a rescue operation scenario by orchestrating four distinct artificial intelligence methodologies: topological mapping (BFS), geometric routing (A*), probabilistic reasoning (Bayesian Inference), and stochastic combinatorial optimization (Simulated Annealing).
+                    </p>
+                    <p>
+                        The entire execution lifecycle is centralized and managed via a single orchestrator function within the main application layer, ensuring a strictly synchronous and deterministic data flow from raw map generation to final route visualization.
+                    </p>
+                </div>
+            </section>
+
+            <!-- 2. Backend Architecture -->
+            <section id="backend-architecture" class="mb-16 scroll-mt-10">
+                <h2 class="text-3xl font-bold mb-6 text-white flex items-center">
+                    <span class="bg-blue-500/20 text-blue-400 p-2 rounded-lg mr-3 text-lg">02</span> Backend Architecture & Data Flow
+                </h2>
+                <div class="glass-panel p-6 rounded-2xl mb-6">
+                    <p class="text-slate-300 mb-4">
+                        The backend operates on a unidirectional data flow. Data state is passed as serialized dictionaries through the four primary modules. The orchestrator maintains the session state and passes outputs from one module as inputs to the next.
+                    </p>
+                    <div class="mermaid bg-slate-900 p-4 rounded-xl border border-slate-700">
+                        flowchart TD
+                            subgraph Orchestrator [main.py Orchestration Layer]
+                                INIT((Start Trigger))
+                                CACHE[(In-Memory Dictionary Cache)]
+                            end
+
+                            subgraph G1 [Group 1: Map Core]
+                                B1[build_graph]
+                                B2[get_reachable_nodes]
+                            end
+
+                            subgraph G2 [Group 2: Routing Core]
+                                R1[compute_pairwise_costs]
+                                R2[A* Search]
+                            end
+
+                            subgraph G3 [Group 3: Inference Core]
+                                I1[update_survivor_probability]
+                                I2[Sum-Rule Marginalization]
+                            end
+
+                            subgraph G4 [Group 4: Optimization Core]
+                                O1[calculate_priority_score]
+                                O2[simulated_annealing]
+                            end
+
+                            INIT --> B1
+                            B1 -- "nodes, edges" --> B2
+                            B2 -- "reachable_targets" --> R1
+                            R1 <--> R2
+                            R1 -- "distance_matrix, path_lookup" --> CACHE
+                            CACHE --> I1
+                            I1 <--> I2
+                            I1 -- "posterior_probabilities" --> O1
+                            O1 -- "priority_weights" --> O2
+                            O2 -- "optimized_sequence" --> END((Visualization))
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Detailed Pipeline Workflow -->
+            <section id="pipeline-workflow" class="mb-16 scroll-mt-10">
+                <h2 class="text-3xl font-bold mb-6 text-white flex items-center">
+                    <span class="bg-blue-500/20 text-blue-400 p-2 rounded-lg mr-3 text-lg">03</span> Detailed Pipeline Workflow
+                </h2>
+                <div class="space-y-6 text-slate-300">
+                    <p>The backend logic is strictly governed by the <code>run_pipeline()</code> function in <code>main.py</code>. The workflow executes in the following exact sequence:</p>
+                    
+                    <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-700">
+                        <h3 class="text-xl font-bold text-white mb-2">Phase 1: Environment Initialization & Reconnaissance</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-sm text-slate-400">
+                            <li><strong>Graph Construction:</strong> <code>group1_map.graph.build_graph()</code> is invoked to generate the node dictionary and adjacency list. Nodes are categorized by string prefixes (e.g., "G" for Gate, "B" for Building).</li>
+                            <li><strong>Reachability Analysis:</strong> <code>group1_map.bfs.get_reachable_nodes(graph, start="G")</code> executes a Breadth-First Search originating from the Gate. It returns a set of reachable node IDs.</li>
+                            <li><strong>Target Selection:</strong> The orchestrator filters the reachable nodes. Only nodes beginning with "B" (Buildings) are added to the <code>target_nodes</code> list.</li>
+                        </ol>
+                    </div>
+
+                    <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-700">
+                        <h3 class="text-xl font-bold text-white mb-2">Phase 2: Pairwise Routing & Cost Matrix Generation</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-sm text-slate-400">
+                            <li><strong>Permutation Setup:</strong> A list of <code>points_of_interest</code> is created, combining the start node ("G") and all discovered <code>target_nodes</code>.</li>
+                            <li><strong>Matrix Calculation:</strong> The system iterates through every unique pair <code>(u, v)</code> in the points of interest.</li>
+                            <li><strong>A* Execution:</strong> For each pair, <code>group2_routing.astar.a_star(graph, nodes, u, v)</code> calculates the optimal path using Euclidean distance as the heuristic.</li>
+                            <li><strong>Caching:</strong> The backend populates two global-level dictionaries: <code>path_lookup[(u, v)]</code> stores the ordered list of node IDs forming the route, and <code>distance_lookup[(u, v)]</code> stores the cumulative path cost.</li>
+                        </ol>
+                    </div>
+
+                    <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-700">
+                        <h3 class="text-xl font-bold text-white mb-2">Phase 3: Sensor Simulation & Probabilistic Inference</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-sm text-slate-400">
+                            <li><strong>Evidence Generation:</strong> For each target building, the orchestrator simulates incoming data by assigning a random <code>risk_level</code> ("Low", "Medium", "High") and a random <code>sensor_reading</code> ("None", "Faint", "Detected").</li>
+                            <li><strong>Bayesian Update:</strong> <code>group3_bayesian.bayesian.update_survivor_probability()</code> is called with the generated evidence.</li>
+                            <li><strong>Posterior Calculation:</strong> The module performs sum-rule marginalization against hardcoded Conditional Probability Tables (CPTs) to output a float representing the final probability of human presence.</li>
+                        </ol>
+                    </div>
+
+                    <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-700">
+                        <h3 class="text-xl font-bold text-white mb-2">Phase 4: Simulated Annealing Optimization</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-sm text-slate-400">
+                            <li><strong>Score Assignment:</strong> <code>group4_planning.assignment.calculate_priority_score()</code> evaluates each target, combining the Bayesian probability with static vulnerability modifiers to assign a numerical weight.</li>
+                            <li><strong>State Initialization:</strong> An initial route sequence is formulated (Gate -> T1 -> T2 ... -> Gate).</li>
+                            <li><strong>Annealing Loop:</strong> <code>group4_planning.optimization.simulated_annealing()</code> begins. It proposes neighbor states by randomly swapping two targets in the sequence.</li>
+                            <li><strong>Cost Function:</strong> The fitness of a sequence is evaluated by summing the distances from <code>distance_lookup</code> and subtracting the priority weights of visited nodes (encouraging high-priority targets earlier in the route).</li>
+                            <li><strong>Cooling:</strong> The loop accepts better routes unconditionally and worse routes probabilistically based on the current "temperature", which decays over a set number of iterations.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Core Data Structures -->
+            <section id="data-structures" class="mb-16 scroll-mt-10">
+                <h2 class="text-3xl font-bold mb-6 text-white flex items-center">
+                    <span class="bg-blue-500/20 text-blue-400 p-2 rounded-lg mr-3 text-lg">04</span> Core Data Structures & State Management
+                </h2>
+                <div class="glass-panel p-6 rounded-2xl space-y-6">
+                    <p class="text-slate-300">
+                        The backend utilizes native Python dictionaries heavily for state transfer across module boundaries. Understanding these dictionary schemas is critical for maintaining the backend.
+                    </p>
+
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-2">1. The Node Dictionary Schema</h3>
+                        <p class="text-sm text-slate-400 mb-2">Generated by Group 1 and passed to all subsequent groups. Keys are node string identifiers (e.g., 'G', 'B1').</p>
+                        <pre class="p-4 text-sm text-slate-300"><code>nodes = {
+    "G": {
+        <span class="data-key">"coord"</span>: <span class="data-type">(0.0, 0.0)</span>, 
+        <span class="data-key">"kind"</span>: <span class="data-type">"Gate"</span>
+    },
+    "B1": {
+        <span class="data-key">"coord"</span>: <span class="data-type">(1.5, 2.0)</span>, 
+        <span class="data-key">"kind"</span>: <span class="data-type">"Building"</span>
+    }
+}</code></pre>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-2">2. The Graph (Adjacency List)</h3>
+                        <p class="text-sm text-slate-400 mb-2">Represents the topological edges. Keys are origin nodes, values are lists of connected destination nodes.</p>
+                        <pre class="p-4 text-sm text-slate-300"><code>graph = {
+    "G": <span class="data-type">["R1", "R2"]</span>,
+    "R1": <span class="data-type">["G", "B1", "I1"]</span>
+}</code></pre>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-2">3. Survivor State Dictionary</h3>
+                        <p class="text-sm text-slate-400 mb-2">Maintained by the orchestrator after Group 3 execution to hold dynamic target data.</p>
+                        <pre class="p-4 text-sm text-slate-300"><code>survivor_data = {
+    "B1": {
+        <span class="data-key">"id"</span>: <span class="data-type">"B1"</span>,
+        <span class="data-key">"risk_level"</span>: <span class="data-type">"High"</span>,
+        <span class="data-key">"sensor_reading"</span>: <span class="data-type">"Detected"</span>,
+        <span class="data-key">"prob"</span>: <span class="data-type">0.85</span>,  <span class="text-slate-500"># Calculated by Group 3</span>
+        <span class="data-key">"vulnerability"</span>: <span class="data-type">"Elderly"</span>
+    }
+}</code></pre>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-2">4. A* Cache Lookups</h3>
+                        <p class="text-sm text-slate-400 mb-2">Flat dictionaries using tuple keys representing <code>(Start, End)</code> node pairs. This ensures O(1) retrieval during the thousands of iterations in Group 4's simulated annealing.</p>
+                        <pre class="p-4 text-sm text-slate-300"><code><span class="text-slate-500"># distance_lookup schema</span>
+distance_lookup = {
+    ("G", "B1"): <span class="data-type">3.54</span>,
+    ("B1", "G"): <span class="data-type">3.54</span>
+}
+
+<span class="text-slate-500"># path_lookup schema</span>
+path_lookup = {
+    ("G", "B1"): <span class="data-type">["G", "R1", "B1"]</span>
+}</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. Backend Module Responsibilities -->
+            <section id="module-responsibilities" class="mb-16 scroll-mt-10">
+                <h2 class="text-3xl font-bold mb-6 text-white flex items-center">
+                    <span class="bg-blue-500/20 text-blue-400 p-2 rounded-lg mr-3 text-lg">05</span> Backend Module Responsibilities
+                </h2>
+                <div class="space-y-6">
+                    <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-700">
+                        <h3 class="text-xl font-bold text-green-400 mb-2">Group 1: Map Generation (<code>group1_map/</code>)</h3>
+                        <ul class="list-disc list-inside text-sm text-slate-400 space-y-1">
+                            <li><strong><code>graph.py</code>:</strong> Contains hardcoded spatial configurations and the <code>build_graph</code> logic. Responsible for translating layout definitions into the standardized Node and Graph dictionary structures.</li>
+                            <li><strong><code>bfs.py</code>:</strong> Implements standard queue-based Breadth-First Search to return a <code>set</code> of reachable keys.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-700">
+                        <h3 class="text-xl font-bold text-blue-400 mb-2">Group 2: Routing (<code>group2_routing/</code>)</h3>
+                        <ul class="list-disc list-inside text-sm text-slate-400 space-y-1">
+                            <li><strong><code>heuristic.py</code>:</strong> Extracts <code>"coord"</code> tuples from the node dictionary and applies standard <code>math.hypot</code> for Euclidean calculations.</li>
+                            <li><strong><code>astar.py</code>:</strong> Standard implementation using Python's <code>heapq</code>. It is completely stateless and relies entirely on inputs provided by the orchestrator per pair calculation.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-700">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-2">Group 3: Inference (<code>group3_bayesian/</code>)</h3>
+                        <ul class="list-disc list-inside text-sm text-slate-400 space-y-1">
+                            <li><strong><code>cpt.py</code>:</strong> Houses the static Conditional Probability Tables formatted as nested dictionaries.</li>
+                            <li><strong><code>bayesian.py</code>:</strong> Performs pure mathematical marginalization. It takes strings ("High", "Detected") and retrieves the associated float from the CPTs to calculate joint and marginal probabilities.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-700">
+                        <h3 class="text-xl font-bold text-red-400 mb-2">Group 4: Optimization (<code>group4_planning/</code>)</h3>
+                        <ul class="list-disc list-inside text-sm text-slate-400 space-y-1">
+                            <li><strong><code>assignment.py</code>:</strong> Contains the static heuristic mapping that converts survivor vulnerability data into scalar weight values.</li>
+                            <li><strong><code>optimization.py</code>:</strong> Houses the <code>simulated_annealing</code> loop. It requires the pre-computed <code>distance_matrix</code> to evaluate route permutations without triggering pathfinding during the annealing loop.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. Setup & Deployment -->
+            <section id="setup-deployment" class="mb-16 scroll-mt-10">
+                <h2 class="text-3xl font-bold mb-6 text-white flex items-center">
+                    <span class="bg-blue-500/20 text-blue-400 p-2 rounded-lg mr-3 text-lg">06</span> Setup & Deployment
+                </h2>
+                <div class="glass-panel p-6 rounded-2xl space-y-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-2">Environment Setup</h3>
+                        <ul class="list-disc list-inside text-slate-300 space-y-1">
+                            <li>Python 3.9+</li>
+                            <li>Standard virtual environment isolation</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-2">Execution Commands</h3>
+                        <pre class="p-4 text-sm overflow-x-auto"><code># 1. Clone the repository and navigate to the directory
+cd disaster_ai
+
+# 2. Create and activate a virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Initialize the backend orchestrator via Streamlit
+streamlit run main.py</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. Troubleshooting -->
+            <section id="troubleshooting" class="mb-16 scroll-mt-10">
+                <h2 class="text-3xl font-bold mb-6 text-white flex items-center">
+                    <span class="bg-blue-500/20 text-blue-400 p-2 rounded-lg mr-3 text-lg">07</span> Known Logs & Behavior
+                </h2>
+                <div class="glass-panel p-6 rounded-2xl">
+                    <h3 class="text-lg font-semibold text-white mb-2">Deployment Port Binding</h3>
+                    <p class="text-slate-300 text-sm mb-4">The backend relies on the Streamlit server for execution. Note the following historical log behavior regarding server initialization:</p>
+                    <pre class="p-4 mb-4 text-sm text-slate-300"><code>2026-04-26 01:43:04.974 Port 8503 is not available</code></pre>
+                    <p class="text-slate-300 text-sm">
+                        <strong>Behavior Note:</strong> By design, if the default port (8501) or subsequent ports are bound by existing background processes, the server will incrementally search for the next available port. A manual port override can be passed to the execution command if a specific deployment port is required: <code>streamlit run main.py --server.port 8080</code>.
+                    </p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // Initialize Mermaid diagrams
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+    </script>
+</body>
+</html>
