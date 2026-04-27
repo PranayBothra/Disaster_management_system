@@ -16,5 +16,4 @@ env/
 .DS_Store
 Thumbs.db
 
-doc.html
-reading_manual.html
+*.html
