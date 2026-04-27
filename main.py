@@ -361,7 +361,7 @@ def main() -> None:
                     
                     # Replace the previous map with the updated progression map
                     map_placeholder.pyplot(step_fig, clear_figure=True)
-                    time.sleep(0.75)  
+                    time.sleep(0.6)  
 
 def _normalize_nodes(
     nodes: Dict[str, Dict[str, object]],
